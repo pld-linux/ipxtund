@@ -29,7 +29,7 @@ else
 	exit 0
 fi
 
-
+RETVAL=0
 # See how we were called.
 case "$1" in
   start)
@@ -41,19 +41,17 @@ case "$1" in
 		# but we can only do simple file check
 		if [ -r /etc/ipxtund.conf -a -w /var/log ]; then
 			ipxtund &
-			ok
-			log_success "ipxtund startup"
-			RETVAL=0
+			RETVAL=$?
+			[ $RETVAL -eq 0 ] && ok || fail
 		else
 			fail
-			log_failed "ipxtund startup"
-			RETVAL=1
+			RETVAL=6
 		fi
+		[ $RETVAL -eq 0 ] && log_success "ipxtund startup" || log_failed "ipxtund startup"
 		[ $RETVAL -eq 0 ] && touch /var/lock/subsys/ipxtund
 	else
 		# show "%s service is already running." <service>
 		msg_already_running ipxtund
-		exit 1
 	fi
 	;;
   stop)
@@ -67,12 +65,12 @@ case "$1" in
 	else
 		# show "%s service is not running." <service>
 		msg_not_running ipxtund
-		exit 1
 	fi	
 	;;
   restart)
 	$0 stop
 	$0 start
+	exit $?
 	;;
   reload)
 	if [ -f /var/lock/subsys/ipxtund ]; then
@@ -84,21 +82,18 @@ case "$1" in
 		[ $RETVAL -eq 0 ] && ok || died
 	else
 		# show "%s service is not running." <service>
-		msg_not_running ipxtund
-		RETVAL=1
+		msg_not_running ipxtund >&2
+		RETVAL=7
 	fi
-	;;
-  force-reload)
-	$0 stop && $0 start
 	;;
   status)
 	status ipxtund
-	RETVAL=$?
+	exit $?
 	;;
   *)
 	# show "Usage: %s {start|stop|restart|reload|force-reload|status}"
 	msg_usage "$0 {start|stop|restart|reload|force-reload|status}"
-	exit 1
+	exit 3
 esac
 
 exit $RETVAL
