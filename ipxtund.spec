@@ -7,6 +7,7 @@ License:	GPL
 Group:		Daemons
 Vendor:		Hinrich Eilts  <eilts@tor.muc.de>
 Source0:	ftp://sunsite.unc.edu/pub/Linux/system/network/daemons/%{name}-%{version}.tgz
+# Source0-md5:	28bd6adeefafc2a3cd0ee39a44098bec
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Patch0:		%{name}-cfg.patch
