@@ -2,7 +2,7 @@ Summary:	Tunneling IPX packets via IP network
 Summary(pl):	Tunel dla pakietów IPX przez sieæ IP
 Name:		ipxtund
 Version:	1.3.0
-Release:	2
+Release:	3
 License:	GPL
 Group:		Daemons
 Group(de):	Server
@@ -14,6 +14,7 @@ Source2:	%{name}.sysconfig
 Patch0:		%{name}-cfg.patch
 BuildRequires:	zlib-devel
 Prereq:		rc-scripts
+Prereq:		/sbin/chkconfig
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_sbindir	/sbin
