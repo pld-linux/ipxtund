@@ -1,0 +1,100 @@
+#!/bin/sh
+#
+# ipxtund	tool for IPX over IP tunneling
+#
+# chkconfig:    345  45 55
+#
+# description:	tool for IPX over IP tunneling
+#
+# $Id$
+
+
+# Source function library
+. /etc/rc.d/init.d/functions
+
+# Get network config
+. /etc/sysconfig/network
+
+# Get service config - may override defaults
+[ -f /etc/sysconfig/ipxtund ] && . /etc/sysconfig/ipxtund
+
+# Check that networking is up.
+if is_yes "${NETWORKING}" && [ ! -f /var/lock/subsys/network ]; then
+	# nls "ERROR: Networking is down. %s can't be run." <service>
+	msg_network_down ipxtund
+	exit 1
+fi
+
+
+# See how we were called.
+case "$1" in
+  start)
+	# Check if the service is already running?
+	if [ ! -f /var/lock/subsys/ipxtund ]; then
+		# show "Starting %s service." <service>
+		msg_starting ipxtund; busy
+		# we can't get status report from background job
+		# but we can only do simple file check
+		if [ -r /etc/ipxtund.conf -a -w /var/log ]; then
+			ipxtund &
+			ok
+			log_success "ipxtund startup"
+			RETVAL=0
+		else
+			fail
+			log_failed "ipxtund startup"
+			RETVAL=1
+		fi
+		[ $RETVAL -eq 0 ] && touch /var/lock/subsys/ipxtund
+	else
+		# show "%s service is already running." <service>
+		msg_already_running ipxtund
+		exit 1
+	fi
+        ;;
+  stop)
+        # Stop daemons.
+        # show "Stopping %s service" <service>
+	if [ -f /var/lock/subsys/ipxtund ]; then
+		msg_stopping ipxtund
+		killproc ipxtund
+		RETVAL=$?
+		rm -f /var/lock/subsys/ipxtund
+	else
+		# show "%s service is not running." <service>
+		msg_not_running ipxtund
+		exit 1
+	fi	
+        ;;
+  restart)
+        $0 stop
+	$0 start
+        ;;
+  reload)
+	if [ -f /var/lock/subsys/ipxtund ]; then
+		# show "Reload %s service" <service>
+		msg_reloading ipxtund
+		killproc ipxtund
+		ipxtund &
+		RETVAL=$?
+	else
+		# show "%s service is not running." <service>
+		msg_not_running ipxtund
+		RETVAL=1
+	fi
+	;;
+  force-reload)
+	$0 stop && $0 start
+	;;
+  status)
+	status ipxtund
+	RETVAL=$?
+        ;;
+  *)
+        # show "Usage: %s {start|stop|status|restart|reload|force-reload}" $0
+	msg_usage "$0 {start|stop|status|restart|reload|force-reload}"
+        exit 1
+esac
+
+exit $RETVAL
+

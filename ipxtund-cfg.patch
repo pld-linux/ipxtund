@@ -1,0 +1,26 @@
+diff -urN ipxtund-1.3.0.org/Configure ipxtund-1.3.0/Configure
+--- ipxtund-1.3.0.org/Configure	Sat Aug 26 18:06:48 2000
++++ ipxtund-1.3.0/Configure	Sat Aug 26 18:09:04 2000
+@@ -191,7 +191,7 @@
+ fi
+ 
+ test -f Makefile && mv Makefile Makefile.old
+-sed -e "s#X_EXTRAFLAGS#$extraflags#" \
++sed -e "s#X_EXTRAFLAGS#$extraflags $OPT#" \
+     -e "s#X_ETHER#$ether#" \
+     -e "s#X_EXTRALIBS#$extralibs#" $templ/Makefile-in > $srcdir/Makefile || exit 1
+ #
+diff -urN ipxtund-1.3.0.org/ipxtund.h ipxtund-1.3.0/ipxtund.h
+--- ipxtund-1.3.0.org/ipxtund.h	Sat Aug 26 18:06:48 2000
++++ ipxtund-1.3.0/ipxtund.h	Sat Aug 26 19:05:19 2000
+@@ -51,8 +51,8 @@
+ #define CHECK_PEER_INTERVALL 600        /* If no packets arrives from a peer
+ 					   in this time, it will be removed */
+ 
+-#define DEFAULT_CONFFILE "./ipxtund.conf"
+-#define DEFAULT_LOGFILE "./ipxtund.log"
++#define DEFAULT_CONFFILE "/etc/ipxtund.conf"
++#define DEFAULT_LOGFILE "/var/log/ipxtund.log"
+ 
+ /* #define BROKEN_INTERFACE 1 *//* in case of many "ipx_length x differ from
+                                    packet_len y" errors */
