@@ -60,39 +60,24 @@ case "$1" in
 	if [ -f /var/lock/subsys/ipxtund ]; then
 		msg_stopping ipxtund
 		killproc ipxtund
-		RETVAL=$?
 		rm -f /var/lock/subsys/ipxtund
 	else
 		# show "%s service is not running." <service>
 		msg_not_running ipxtund
 	fi	
 	;;
-  restart)
+  restart|force-reload)
 	$0 stop
 	$0 start
 	exit $?
-	;;
-  reload)
-	if [ -f /var/lock/subsys/ipxtund ]; then
-		# show "Reload %s service" <service>
-		msg_reloading ipxtund
-		killproc ipxtund
-		ipxtund &
-		RETVAL=$?
-		[ $RETVAL -eq 0 ] && ok || died
-	else
-		# show "%s service is not running." <service>
-		msg_not_running ipxtund >&2
-		RETVAL=7
-	fi
 	;;
   status)
 	status ipxtund
 	exit $?
 	;;
   *)
-	# show "Usage: %s {start|stop|restart|reload|force-reload|status}"
-	msg_usage "$0 {start|stop|restart|reload|force-reload|status}"
+	# show "Usage: %s {start|stop|restart|force-reload|status}"
+	msg_usage "$0 {start|stop|restart|force-reload|status}"
 	exit 3
 esac
 
