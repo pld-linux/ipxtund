@@ -13,7 +13,7 @@ Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Patch0:		%{name}-cfg.patch
 BuildRequires:	zlib-devel
-Prereq:		/sbin/chkconfig
+Prereq:		rc-scripts
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_sbindir	/sbin
@@ -47,8 +47,8 @@ install -d $RPM_BUILD_ROOT{%{_sbindir},%{_mandir}/man{5,7}} \
 install ipxtund			$RPM_BUILD_ROOT%{_sbindir}
 install examples/ipxtund.conf	$RPM_BUILD_ROOT%{_sysconfdir}
 install	*.7			$RPM_BUILD_ROOT%{_mandir}/man7
-install %{SOURCE1}		$RPM_BUILD_ROOT%{_sysconfdir}/rc.d/init.d/%{name}
-install %{SOURCE2}		$RPM_BUILD_ROOT%{_sysconfdir}/sysconfig/%{name}
+install %{SOURCE1}		$RPM_BUILD_ROOT/etc/rc.d/init.d/%{name}
+install %{SOURCE2}		$RPM_BUILD_ROOT/etc//sysconfig/%{name}
 echo ".so man7/%{name}.7" >	$RPM_BUILD_ROOT%{_mandir}/man5/%{name}.conf.5
 touch				$RPM_BUILD_ROOT%{_var}/log/%{name}.log
 
