@@ -5,8 +5,6 @@ Version:	1.3.0
 Release:	3
 License:	GPL
 Group:		Daemons
-Group(de):	Server
-Group(pl):	Serwery
 Vendor:		Hinrich Eilts  <eilts@tor.muc.de>
 Source0:	ftp://sunsite.unc.edu/pub/Linux/system/network/daemons/%{name}-%{version}.tgz
 Source1:	%{name}.init
