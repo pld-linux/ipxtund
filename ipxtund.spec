@@ -2,7 +2,7 @@ Summary:	Tunneling IPX packets via IP network
 Summary(pl):	Tunel dla pakietów IPX przez sieæ IP
 Name:		ipxtund
 Version:	1.3.0
-Release:	3
+Release:	4
 License:	GPL
 Group:		Daemons
 Vendor:		Hinrich Eilts  <eilts@tor.muc.de>
@@ -48,7 +48,7 @@ install examples/ipxtund.conf	$RPM_BUILD_ROOT%{_sysconfdir}
 install	*.7			$RPM_BUILD_ROOT%{_mandir}/man7
 install %{SOURCE1}		$RPM_BUILD_ROOT/etc/rc.d/init.d/%{name}
 install %{SOURCE2}		$RPM_BUILD_ROOT/etc//sysconfig/%{name}
-echo ".so man7/%{name}.7" >	$RPM_BUILD_ROOT%{_mandir}/man5/%{name}.conf.5
+echo ".so %{name}.7" >	$RPM_BUILD_ROOT%{_mandir}/man5/%{name}.conf.5
 touch				$RPM_BUILD_ROOT%{_var}/log/%{name}.log
 
 gzip -9nf INSTALL README
