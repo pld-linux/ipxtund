@@ -51,8 +51,6 @@ install %{SOURCE2}		$RPM_BUILD_ROOT/etc//sysconfig/%{name}
 echo ".so %{name}.7" >	$RPM_BUILD_ROOT%{_mandir}/man5/%{name}.conf.5
 touch				$RPM_BUILD_ROOT%{_var}/log/%{name}.log
 
-gzip -9nf INSTALL README
-
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -69,7 +67,7 @@ fi
 
 %files
 %defattr(644,root,root,755)
-%doc *.gz
+%doc INSTALL README
 %attr(755,root,root) %{_sbindir}/%{name}
 %attr(754,root,root) /etc/rc.d/init.d/ipxtund
 %attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/sysconfig/*
