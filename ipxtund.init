@@ -2,7 +2,7 @@
 #
 # ipxtund	tool for IPX over IP tunneling
 #
-# chkconfig:    345  45 55
+# chkconfig:	345 45 55
 #
 # description:	tool for IPX over IP tunneling
 #
@@ -19,10 +19,14 @@
 [ -f /etc/sysconfig/ipxtund ] && . /etc/sysconfig/ipxtund
 
 # Check that networking is up.
-if is_yes "${NETWORKING}" && [ ! -f /var/lock/subsys/network ]; then
-	# nls "ERROR: Networking is down. %s can't be run." <service>
-	msg_network_down ipxtund
-	exit 1
+if is_yes "${NETWORKING}"; then
+	if [ ! -f /var/lock/subsys/network ]; then
+		# nls "ERROR: Networking is down. %s can't be run." <service>
+		msg_network_down ipxtund
+		exit 1
+	fi
+else
+	exit 0
 fi
 
 
@@ -51,10 +55,10 @@ case "$1" in
 		msg_already_running ipxtund
 		exit 1
 	fi
-        ;;
+	;;
   stop)
-        # Stop daemons.
-        # show "Stopping %s service" <service>
+	# Stop daemons.
+	# show "Stopping %s service" <service>
 	if [ -f /var/lock/subsys/ipxtund ]; then
 		msg_stopping ipxtund
 		killproc ipxtund
@@ -65,18 +69,20 @@ case "$1" in
 		msg_not_running ipxtund
 		exit 1
 	fi	
-        ;;
+	;;
   restart)
-        $0 stop
+	$0 stop
 	$0 start
-        ;;
+	;;
   reload)
 	if [ -f /var/lock/subsys/ipxtund ]; then
 		# show "Reload %s service" <service>
 		msg_reloading ipxtund
+		busy
 		killproc ipxtund
 		ipxtund &
 		RETVAL=$?
+		[ $RETVAL -eq 0 ] && ok || died
 	else
 		# show "%s service is not running." <service>
 		msg_not_running ipxtund
@@ -89,12 +95,11 @@ case "$1" in
   status)
 	status ipxtund
 	RETVAL=$?
-        ;;
+	;;
   *)
-        # show "Usage: %s {start|stop|status|restart|reload|force-reload}" $0
-	msg_usage "$0 {start|stop|status|restart|reload|force-reload}"
-        exit 1
+	# show "Usage: %s {start|stop|restart|reload|force-reload|status}"
+	msg_usage "$0 {start|stop|restart|reload|force-reload|status}"
+	exit 1
 esac
 
 exit $RETVAL
-
