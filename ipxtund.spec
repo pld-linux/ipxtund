@@ -58,10 +58,15 @@ gzip -9nf INSTALL README
 rm -rf $RPM_BUILD_ROOT
 
 %post
-%chkconfig_add
+/sbin/chkconfig --add %{name}
 
 %preun
-%chkconfig_del
+if [ "$1" = "0" ]; then
+	if [ -f /var/lock/subsys/%{name} ]; then
+		/etc/rc.d/init.d/%{name} stop 1>&2
+	fi
+	/sbin/chkconfig --del %{name}
+fi
 
 %files
 %defattr(644,root,root,755)
