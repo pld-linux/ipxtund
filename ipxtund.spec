@@ -11,6 +11,7 @@ Source0:	ftp://sunsite.unc.edu/pub/Linux/system/network/daemons/%{name}-%{versio
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Patch0:		%{name}-cfg.patch
+Patch1:		%{name}-llh.patch
 BuildRequires:	zlib-devel
 PreReq:		rc-scripts
 Requires(post,preun):	/sbin/chkconfig
@@ -32,6 +33,7 @@ Internet.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 
 %build
 OPT="%{rpmcflags}"; export OPT
