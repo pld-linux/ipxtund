@@ -1,9 +1,11 @@
 Summary:	Tunneling IPX packets via IP network
+Summary(pl):	Tunel dla pakietów IPX przez sieæ IP
 Name:		ipxtund
 Version:	1.3.0
 Release:	1
 License:	GPL
 Group:		Daemons
+Group(de):	Server
 Group(pl):	Serwery
 Vendor:		Hinrich Eilts  <eilts@tor.muc.de>
 Source0:	ftp://sunsite.unc.edu/pub/Linux/system/network/daemons/%{name}-%{version}.tgz
@@ -31,7 +33,7 @@ Internet.
 %patch0 -p1
 
 %build
-OPT="$RPM_OPT_FLAGS"; export OPT
+OPT="%{rpmcflags}"; export OPT
 ./Configure
 
 %{__make}
@@ -39,9 +41,9 @@ OPT="$RPM_OPT_FLAGS"; export OPT
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_sbindir},%{_mandir}/man{5,7}} \
-	$RPM_BUILD_ROOT{/etc/{rc.d/init.d,sysconfig},%{_var}/log}
+	$RPM_BUILD_ROOT{%{_sysconfdir}/{rc.d/init.d,sysconfig},%{_var}/log}
 
-install -s ipxtund		$RPM_BUILD_ROOT%{_sbindir}
+install ipxtund			$RPM_BUILD_ROOT%{_sbindir}
 install examples/ipxtund.conf	$RPM_BUILD_ROOT%{_sysconfdir}
 install	*.7			$RPM_BUILD_ROOT%{_mandir}/man7
 install %{SOURCE1}		$RPM_BUILD_ROOT%{_sysconfdir}/rc.d/init.d/%{name}
@@ -49,7 +51,7 @@ install %{SOURCE2}		$RPM_BUILD_ROOT%{_sysconfdir}/sysconfig/%{name}
 echo ".so man7/%{name}.7" >	$RPM_BUILD_ROOT%{_mandir}/man5/%{name}.conf.5
 touch				$RPM_BUILD_ROOT%{_var}/log/%{name}.log
 
-gzip -9nf INSTALL README $RPM_BUILD_ROOT%{_mandir}/man*/*
+gzip -9nf INSTALL README
 
 %clean
 rm -rf $RPM_BUILD_ROOT
