@@ -78,7 +78,6 @@ case "$1" in
 	if [ -f /var/lock/subsys/ipxtund ]; then
 		# show "Reload %s service" <service>
 		msg_reloading ipxtund
-		busy
 		killproc ipxtund
 		ipxtund &
 		RETVAL=$?
