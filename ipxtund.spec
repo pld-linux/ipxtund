@@ -2,7 +2,7 @@ Summary:	Tunneling IPX packets via IP network
 Summary(pl):	Tunel dla pakietów IPX przez sieæ IP
 Name:		ipxtund
 Version:	1.3.0
-Release:	4
+Release:	5
 License:	GPL
 Group:		Daemons
 Vendor:		Hinrich Eilts  <eilts@tor.muc.de>
