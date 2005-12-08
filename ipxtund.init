@@ -21,7 +21,6 @@
 # Check that networking is up.
 if is_yes "${NETWORKING}"; then
 	if [ ! -f /var/lock/subsys/network -a "$1" != stop -a "$1" != status ]; then
-		# nls "ERROR: Networking is down. %s can't be run." <service>
 		msg_network_down ipxtund
 		exit 1
 	fi
@@ -35,7 +34,6 @@ case "$1" in
   start)
 	# Check if the service is already running?
 	if [ ! -f /var/lock/subsys/ipxtund ]; then
-		# show "Starting %s service." <service>
 		msg_starting ipxtund; busy
 		# we can't get status report from background job
 		# but we can only do simple file check
@@ -50,19 +48,16 @@ case "$1" in
 		[ $RETVAL -eq 0 ] && log_success "ipxtund startup" || log_failed "ipxtund startup"
 		[ $RETVAL -eq 0 ] && touch /var/lock/subsys/ipxtund
 	else
-		# show "%s service is already running." <service>
 		msg_already_running ipxtund
 	fi
 	;;
   stop)
 	# Stop daemons.
-	# show "Stopping %s service" <service>
 	if [ -f /var/lock/subsys/ipxtund ]; then
 		msg_stopping ipxtund
 		killproc ipxtund
 		rm -f /var/lock/subsys/ipxtund
 	else
-		# show "%s service is not running." <service>
 		msg_not_running ipxtund
 	fi	
 	;;
@@ -76,7 +71,6 @@ case "$1" in
 	exit $?
 	;;
   *)
-	# show "Usage: %s {start|stop|restart|force-reload|status}"
 	msg_usage "$0 {start|stop|restart|force-reload|status}"
 	exit 3
 esac
