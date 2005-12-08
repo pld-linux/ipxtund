@@ -59,7 +59,7 @@ case "$1" in
 		rm -f /var/lock/subsys/ipxtund
 	else
 		msg_not_running ipxtund
-	fi	
+	fi
 	;;
   restart|force-reload)
 	$0 stop
