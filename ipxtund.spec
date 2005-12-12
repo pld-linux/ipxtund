@@ -13,8 +13,8 @@ Source2:	%{name}.sysconfig
 Patch0:		%{name}-cfg.patch
 Patch1:		%{name}-llh.patch
 BuildRequires:	zlib-devel
-PreReq:		rc-scripts
 Requires(post,preun):	/sbin/chkconfig
+Requires:	rc-scripts
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_sbindir	/sbin
@@ -73,7 +73,7 @@ fi
 %doc INSTALL README
 %attr(755,root,root) %{_sbindir}/%{name}
 %attr(754,root,root) /etc/rc.d/init.d/ipxtund
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/sysconfig/*
-%config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/%{name}.conf
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/*
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}.conf
 %attr(640,root,root) %ghost %{_var}/log/%{name}.log
 %{_mandir}/man*/*
