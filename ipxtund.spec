@@ -5,7 +5,6 @@ Version:	1.3.0
 Release:	5
 License:	GPL
 Group:		Daemons
-Vendor:		Hinrich Eilts  <eilts@tor.muc.de>
 Source0:	ftp://sunsite.unc.edu/pub/Linux/system/network/daemons/%{name}-%{version}.tgz
 # Source0-md5:	28bd6adeefafc2a3cd0ee39a44098bec
 Source1:	%{name}.init
@@ -36,9 +35,8 @@ Internet.
 %patch1 -p1
 
 %build
-OPT="%{rpmcflags}"; export OPT
+export OPT="%{rpmcflags}"
 ./Configure
-
 %{__make}
 
 %install
@@ -50,7 +48,7 @@ install ipxtund			$RPM_BUILD_ROOT%{_sbindir}
 install examples/ipxtund.conf	$RPM_BUILD_ROOT%{_sysconfdir}
 install	*.7			$RPM_BUILD_ROOT%{_mandir}/man7
 install %{SOURCE1}		$RPM_BUILD_ROOT/etc/rc.d/init.d/%{name}
-install %{SOURCE2}		$RPM_BUILD_ROOT/etc//sysconfig/%{name}
+install %{SOURCE2}		$RPM_BUILD_ROOT/etc/sysconfig/%{name}
 echo ".so %{name}.7" >	$RPM_BUILD_ROOT%{_mandir}/man5/%{name}.conf.5
 touch				$RPM_BUILD_ROOT%{_var}/log/%{name}.log
 
@@ -59,12 +57,11 @@ rm -rf $RPM_BUILD_ROOT
 
 %post
 /sbin/chkconfig --add %{name}
+%service %{name} restart
 
 %preun
 if [ "$1" = "0" ]; then
-	if [ -f /var/lock/subsys/%{name} ]; then
-		/etc/rc.d/init.d/%{name} stop 1>&2
-	fi
+	%service %{name} stop
 	/sbin/chkconfig --del %{name}
 fi
 
