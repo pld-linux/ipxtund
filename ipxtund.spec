@@ -2,7 +2,7 @@ Summary:	Tunneling IPX packets via IP network
 Summary(pl):	Tunel dla pakietów IPX przez sieæ IP
 Name:		ipxtund
 Version:	1.3.0
-Release:	5
+Release:	6
 License:	GPL
 Group:		Daemons
 Source0:	ftp://sunsite.unc.edu/pub/Linux/system/network/daemons/%{name}-%{version}.tgz
@@ -37,7 +37,8 @@ Internet.
 %build
 export OPT="%{rpmcflags}"
 ./Configure
-%{__make}
+%{__make} \
+	CC="%{__cc}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
