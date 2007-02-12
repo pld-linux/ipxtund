@@ -1,5 +1,5 @@
 Summary:	Tunneling IPX packets via IP network
-Summary(pl):	Tunel dla pakietów IPX przez sieæ IP
+Summary(pl.UTF-8):   Tunel dla pakietÃ³w IPX przez sieÄ‡ IP
 Name:		ipxtund
 Version:	1.3.0
 Release:	6
@@ -23,10 +23,10 @@ ipxtund connect IPX based LANs over TCP/IP. Especially, this allows
 several parties at different LANs to play IPX based games as sharing
 one LAN, if their LANs are connected to a TCP/IP WAN like Internet.
 
-%description -l pl
-ipxtund ³±czy sieci bazuj±ce na IPX poprzez TCP/IP. Narzêdzie to
-pozwala na np. granie w gry bazuj±ce na IPX graczom w ró¿nych sieciach
-o ile tylko sieci te s± po³±czone do sieci WAN TCP/IP takiej jak
+%description -l pl.UTF-8
+ipxtund Å‚Ä…czy sieci bazujÄ…ce na IPX poprzez TCP/IP. NarzÄ™dzie to
+pozwala na np. granie w gry bazujÄ…ce na IPX graczom w rÃ³Å¼nych sieciach
+o ile tylko sieci te sÄ… poÅ‚Ä…czone do sieci WAN TCP/IP takiej jak
 Internet.
 
 %prep
