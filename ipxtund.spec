@@ -1,5 +1,5 @@
 Summary:	Tunneling IPX packets via IP network
-Summary(pl.UTF-8):   Tunel dla pakietów IPX przez sieć IP
+Summary(pl.UTF-8):	Tunel dla pakietów IPX przez sieć IP
 Name:		ipxtund
 Version:	1.3.0
 Release:	6
